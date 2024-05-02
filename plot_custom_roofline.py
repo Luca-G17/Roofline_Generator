@@ -15,14 +15,14 @@ def generate_roofline_data(dirname):
         pid = p.pid
         os.kill(pid, signal.SIGINT)
 
-def average_roofline_data(dirname):
+def average_roofline_data(dirname, loop_name):
     rank_dirs = os.listdir(dirname)
     rank_data = [ f'{dirname}/{dir}/roofline.data' for dir in rank_dirs if os.path.isdir(f'{dirname}/{dir}')]
     data = []
     for rank in rank_data:
         with open(rank, 'r') as f:
             JSON = json.load(f)
-            data.append([[loop['x'], loop['y']] for loop in JSON['loops'] if 'timestep' in loop['name']][0])
+            data.append([[loop['x'], loop['y']] for loop in JSON['loops'] if loop_name in loop['name']][0])
     
     return np.mean(np.array(data), axis=0)
 
@@ -83,10 +83,10 @@ compute_roofs = [
 ]
 
 data = [
-    average_roofline_data('single_rank'),
-    average_roofline_data('baseline_ranks'),
-    average_roofline_data('single_rank_1024'),
-    average_roofline_data('baseline_rank_1024')
+    average_roofline_data('single_rank', 'timestep'),
+    average_roofline_data('baseline_ranks', 'timestep'),
+    average_roofline_data('single_rank_1024', 'timestep'),
+    average_roofline_data('baseline_rank_1024', 'timestep')
 ]
 
 labels = [
