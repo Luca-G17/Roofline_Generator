@@ -19,7 +19,9 @@ compute_roofs = [
 ```
 
 ### Input Data
-This project is designed to use Intel Advisor's `roofline.data` file containing the relavant data for each loop. However we discard most of the data in the file so the program should work with the following formatting, the $x$ and $y$ coordinates are stored in the format of $\log_{10}(\text{Measured Value})$
+This project is designed to use Intel Advisor's `roofline.data` file containing the relavant data for each loop. However we discard most of the data in the file so the program should work with the following formatting.  
+$X=\log_{10}(\text{Measured Arithmetic Intensity (FLOP/Byte)})$  
+$Y=\log_{10}(\text{Measured Operational Performance (GFLOPS)})$  
 
 ```
 {
